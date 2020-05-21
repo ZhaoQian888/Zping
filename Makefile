@@ -41,7 +41,6 @@ all: ${NAME}
 ${NAME}:${OBJ}
 	@echo ${B}Compiling and linking [${OBJ}]...${X}
 	@${CC} ${CFLAGS} -o $@ ${OBJ}
-	@/bin/rm -Rf ${OBJDIR}
 	@echo ${G}Success"   "[${NAME}]${X}
 
 ${OBJDIR}/%.o: ${SRCDIR}/%.c
