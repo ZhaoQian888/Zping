@@ -22,7 +22,7 @@ int icmp_decode(char * buf,int len){
             return -1;
         }
         //将读取的包序号标记为已接受状态
-        ping_packet[icmp->icmp_seq].flag=0;
+        ping_packet[icmp->icmp_seq].recvflag=1;
         //计算时间差
         struct timeval send_time=ping_packet[icmp->icmp_seq].send_time;
         struct timeval recv_time;
@@ -84,7 +84,7 @@ void ping_recv(struct recv_para *arg){
         }
     }
 }
-
+//计算时间差
 struct timeval cal_time_offset(struct timeval begin, struct timeval end)
 {
     struct timeval ans;

@@ -1,6 +1,6 @@
 NAME =Zping
 
-SRC = icmp_create.c  icmp_recv.c  icmp_send.c Zping.c
+SRC = icmp_create.c  icmp_recv.c  icmp_send.c Zping.c  icmp_timeout.c
 
 CC = gcc
 

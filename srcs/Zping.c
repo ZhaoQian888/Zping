@@ -30,8 +30,8 @@ int main(int argc,char *argv[]){
     //地址字符串
     char dese_addr_str[80];
     memset(dese_addr_str,0,sizeof(dese_addr_str));
-    //两个线程
-    pthread_t send_id,recv_id;
+    //三个线程：发送线程，接收线程，超时检查线程
+    pthread_t send_id,recv_id,timeout_id;
     //参数检查
     if(argc<2){
         printf("NO ip address \n");
@@ -102,10 +102,15 @@ int main(int argc,char *argv[]){
         printf("Fail to create ping recv thread!\n");
         return -1;
     }
+    // 创建timeout线程
+    if(pthread_create(&timeout_id,NULL,(void*)check_timeout,&(alive))){
+        printf("Fail to create ping timeout thread!\n");
+        return -1;
+    }
     //等待合并
     pthread_join(send_id, NULL);//等待send ping线程结束后进程再结束
     pthread_join(recv_id, NULL);//等待recv ping线程结束后进程再结束
-
+    pthread_join(timeout_id,NULL);//等待timeout ping线程结束后进程再结束
     ping_stats_show();
 
     close(rawsocket);

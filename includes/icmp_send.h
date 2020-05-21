@@ -7,7 +7,8 @@
 typedef struct ping_packet_info{
     struct timeval send_time;
     struct timeval recv_time;
-    int flag;
+    int sendflag;
+    int recvflag;
     int seq;
 }ping_packet_info;
 

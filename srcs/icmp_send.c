@@ -10,10 +10,17 @@ void send_query(struct send_para *arg){
     memset(send_buf,0,sizeof(send_buf));
     //开始时间
     gettimeofday(&start_time,NULL);
+    //初始化缓存信息
+    for(int i=0;i<PACKET_MAX;i++){
+        ping_packet[i].sendflag=0;
+        ping_packet[i].recvflag=0;
+    }
     while(*alive==1){
         int size=0;
         //记录发送时间
         gettimeofday(&(ping_packet[send_count].send_time),NULL);
+        //将该标记为设置为该包已发送
+        ping_packet[send_count].sendflag=1;
         //构造icmp数据包
         icmp_create((struct icmp*)send_buf,send_count,64);
         //发送数据报
