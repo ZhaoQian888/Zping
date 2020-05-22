@@ -14,6 +14,31 @@ int icmp_decode(char * buf,int len){
         fprintf(stderr, "Invalid icmp packet.Its length is less than 8\n");
         return -1;
     }
+    switch (icmp->icmp_type)
+    {
+    case ICMP_UNREACH:
+        /* code */
+        printf("destnation is no rachable\n");
+        break;
+    case ICMP_SOURCEQUENCH :
+        /* code */
+        printf("packet lost, slow down\n");
+        break;
+    case ICMP_TIMXCEED  :
+        printf("time exceeded\n");
+        /* code */
+        break;
+    case ICMP_PARAMPROB:
+        /* code */
+        printf("ip header bad\n");
+        break;
+    case ICMP_REDIRECT:
+        printf("shorter route\n");
+        /* code */
+        break;
+    default:
+        break;
+    }
     //检查报文类型，以及进程号是否相同
     if((icmp->icmp_type==ICMP_ECHOREPLY)&&(icmp->icmp_id==(pid&0xffff))){
         //检查包的序号

@@ -1,4 +1,5 @@
 #include"icmp_send.h"
+
 //发送icmp数据报
 void send_query(struct send_para *arg){
     //处理参数
@@ -19,17 +20,17 @@ void send_query(struct send_para *arg){
         int size=0;
         //记录发送时间
         gettimeofday(&(ping_packet[send_count].send_time),NULL);
-        //将该标记为设置为该包已发送
-        ping_packet[send_count].sendflag=1;
         //构造icmp数据包
         icmp_create((struct icmp*)send_buf,send_count,64);
         //发送数据报
         size=sendto(rawsock,send_buf,64,0,(struct sockaddr*)dest,sizeof(dest));
-        //发送计数
-        send_count++;
         if(size<0){
-            fprintf(stderr, "send icmp packet fail!\n");
-            continue;  
+            fprintf(stderr, "send icmp packet fail!     :     %s\n",strerror(errno));
+        }else{
+            //将该标记为设置为该包已发送
+            ping_packet[send_count].sendflag=1;
+            //发送计数
+            send_count++;
         }
         sleep(1);
     }
