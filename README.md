@@ -19,3 +19,11 @@ Requires root access
 sudo ./Zping www.baidu.com
 
 ```
+
+## How to clean
+
+``` bash
+
+make clean
+
+```
